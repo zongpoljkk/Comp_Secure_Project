@@ -1,29 +1,37 @@
-// import express from 'express';
 const express = require("express");
 const mongoose = require("mongoose");
-const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
 const passport = require("passport");
-const keys = require("./config/keys");
-require("./models/User");
-require("./services/passport");
 
-mongoose.connect(keys.mongoURI);
+const users = require("./routes/api/users");
 
-// Listen to node and route http request to the route handler
 const app = express();
 
+// Bodyparser middleware
 app.use(
-  cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    keys: [keys.cookieKey],
+  bodyParser.urlencoded({
+    extended: false,
   })
 );
+app.use(bodyParser.json());
+
+// DB Config
+const db = require("./config/keys").mongoURI;
+
+// Connect to MongoDB
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch((err) => console.log(err));
+
+// Passport middleware
 app.use(passport.initialize());
-app.use(passport.session());
 
-require("./routes/authRoutes")(app);
+// Passport config
+require("./config/passport")(passport);
 
-// In develpment use port 5000
-// In production use provided port from Heroku
-const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+// Routes
+app.use("/api/users", users);
+
+const port = process.env.PORT || 5000; // process.env.port is Heroku's port if you choose to deploy the app there
+app.listen(port, () => console.log(`Server up and running on port ${port} !`));
