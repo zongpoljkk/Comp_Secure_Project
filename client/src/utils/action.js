@@ -67,3 +67,11 @@ export const getAllPosts = async () => {
   const results = await axios.get("http://localhost:5000/api/posts/allpost");
   return results.data;
 };
+
+// Add new Comment
+export const addComment = (comment) => {
+  axios
+    .post("http://localhost:5000/api/posts/newcomment", comment)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};

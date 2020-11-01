@@ -9,37 +9,45 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import axios from "axios";
-import { getAllPosts } from "../utils/action";
+import { getAllPosts, addComment } from "../utils/action";
+
+const { TextArea } = Input;
+const Editor = ({ id, onChange, onSubmit }) => (
+  <>
+    <Form.Item id={id}>
+      <TextArea id={id} rows={2} onChange={onChange} />
+    </Form.Item>
+    <Form.Item id={id}>
+      <Button id={id} onClick={onSubmit} type="primary">
+        Add Comment
+      </Button>
+    </Form.Item>
+  </>
+);
+
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { TextArea } = Input;
-  const Editor = ({ onChange, onSubmit }) => (
-    <>
-      <Form.Item>
-        <TextArea rows={2} onChange={onChange} />
-      </Form.Item>
-      <Form.Item>
-        <Button htmlType="submit" onClick={onSubmit} type="primary">
-          Add Comment
-        </Button>
-      </Form.Item>
-    </>
-  );
-
-  const handleChange = () => {};
-  const handleSubmit = () => {};
+  const [comments, setComments] = useState({
+    id: "",
+    name: "Boom",
+    comment: "",
+  });
+  const handleChange = (e) => {
+    setComments({ id: e.target.id, name: "Boom", comment: e.target.value });
+  };
+  const handleSubmit = () => {
+    console.log(comments);
+    addComment(comments)
+  };
 
   useEffect(async () => {
     setIsLoading(true);
-    // getAllPosts();
-    // console.log(results)
     setPosts(await getAllPosts());
     setIsLoading(false);
   }, []);
 
   const renderComment = (comment) => {
-    console.log(comment);
     let field = [];
     for (let i = 0; i != comment.length; i++) {
       field.push(
@@ -53,7 +61,7 @@ const Posts = () => {
               alt="Han Solo"
             />
           }
-          content={<p>{comment[i].post}</p>}
+          content={<p>{comment[i].comment}</p>}
           datetime={
             <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
               <span>{moment().fromNow()}</span>
@@ -87,8 +95,12 @@ const Posts = () => {
                 </Tooltip>
               }
             >
-              {renderComment(value.comment)}
-              <Editor onChange={handleChange} onSubmit={handleSubmit} />
+              {renderComment(value.comments)}
+              <Editor
+                id={value._id}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+              />
             </Comment>
           );
         })

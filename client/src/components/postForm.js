@@ -19,7 +19,7 @@ const PostForm = () => {
     const request = {
       name: "Bosskung",
       post: values.post.Post,
-      comment: [],
+      comments: [],
     };
     addPost(request)
   };

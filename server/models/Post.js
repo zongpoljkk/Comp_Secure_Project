@@ -15,13 +15,13 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
-  comment: [
+  comments: [
     {
       name: {
         type: String,
         required: true,
       },
-      post: {
+      comment: {
         type: String,
         required: true,
       },

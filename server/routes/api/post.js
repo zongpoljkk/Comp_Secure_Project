@@ -6,11 +6,14 @@ const Post = require("../../models/Post");
 
 router.post("/newpost", (req, res) => {
   console.log("new Post");
-  console.log(req.body.post)
+  console.log(req.body.post);
   const newPost = new Post({
     name: "Bosskung",
     post: req.body.post,
-    comment: [{name : "Boom" , post : "EIEI"},{name : "Za" , post : "Kuy rai"}],
+    comments: [
+      { name: "Boom", comment: "EIEI" },
+      { name: "Za", comment: "Kuy rai" },
+    ],
   });
   newPost
     .save()
@@ -28,7 +31,19 @@ router.get("/allpost", (req, res) => {
 });
 
 router.post("/newcomment", (req, res) => {
-  console.log("new comment");
+  
+  const newComment = { name: req.body.name, comment: req.body.comment };
+  console.log(newComment)
+  Post.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      $push: {
+        comments: newComment,
+      },
+    }
+  )
+    .then((comment) => res.json(comment))
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;
