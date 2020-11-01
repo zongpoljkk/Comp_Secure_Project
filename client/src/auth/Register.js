@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { Row, Col } from "antd";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,23 +25,17 @@ const Register = () => {
 
   return (
     <div>
+      <Row>{/* <Link to="/">Back to Home</Link> */}</Row>
       <Row>
-        <Link to="/">Back to Home</Link>
+        <Col span={24}>
+          <Row>Register</Row>
+          <Row>
+            Already have an account?
+            {/* <Link to="/login"></Link> */}
+          </Row>
+        </Col>
       </Row>
-      <Row>
-          <Col span={24}>
-            <Row>
-                Register
-            </Row>
-            <Row>
-                Already have an account?
-                <Link to="/login"></Link>
-            </Row>
-          </Col>
-      </Row>
-      <Row>
-          
-      </Row>
+      <Row></Row>
     </div>
   );
 };
