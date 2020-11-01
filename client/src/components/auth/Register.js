@@ -24,13 +24,23 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState({});
 
-  const onChange = (e) => {
-    // TODO:
-    // this.setState({ [e.target.id]: e.target.value });
+  const onNameChange = (e) => {
+    setName(e.target.value)
+  };
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value)
+  };
+
+  const onPasswordChange = (e) => {
+    setPassword(e.target.value)
+  };
+
+  const onPassword2Change = (e) => {
+    setPassword2(e.target.value)
   };
 
   const onSubmit = (e) => {
-    e.preventDefault();
     const newUser = {
       name: name,
       email: email,
@@ -53,8 +63,7 @@ const Register = () => {
         <Col span={24}>
           <Row>Register</Row>
           <Row>
-            Already have an account?
-            <Link to="/login"></Link>
+            <Link to="/login">Already have an account?</Link>
           </Row>
         </Col>
       </Row>
@@ -74,6 +83,7 @@ const Register = () => {
                 message: "Please input your name!",
               },
             ]}
+            onChange={onNameChange}
           >
             <Input />
           </Form.Item>
@@ -87,6 +97,7 @@ const Register = () => {
                 message: "Please input your email!",
               },
             ]}
+            onChange={onEmailChange}
           >
             <Input />
           </Form.Item>
@@ -100,6 +111,7 @@ const Register = () => {
                 message: "Please input your password!",
               },
             ]}
+            onChange={onPasswordChange}
           >
             <Input.Password />
           </Form.Item>
@@ -113,6 +125,7 @@ const Register = () => {
                 message: "Please input your password!",
               },
             ]}
+            onChange={onPassword2Change}
           >
             <Input.Password />
           </Form.Item>

@@ -22,13 +22,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
 
-  const onChange = (e) => {
+  const onEmailChange = (e) => {
     // TODO:
     // this.setState({ [e.target.id]: e.target.value });
+    setEmail(e.target.value)
   };
 
+  const onPasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+
   const onSubmit = (e) => {
-    e.preventDefault();
     const userData = {
       email: email,
       password: password,
@@ -65,6 +69,7 @@ const Login = () => {
               message: "Please input your email!",
             },
           ]}
+          onChange={onEmailChange}
         >
           <Input />
         </Form.Item>
@@ -78,6 +83,7 @@ const Login = () => {
               message: "Please input your password!",
             },
           ]}
+          onChange={onPasswordChange}
         >
           <Input.Password />
         </Form.Item>
