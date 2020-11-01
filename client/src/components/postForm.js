@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col } from "antd";
-import { Form, Input, InputNumber, Button } from "antd";
+import React from "react";
+import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const layout = {
   labelCol: {
@@ -15,27 +14,27 @@ const layout = {
 };
 
 const PostForm = () => {
+  const history = useHistory();
   const onFinish = (values) => {
+    console.log("new");
     const request = {
       name: "Bosskung",
       post: values.post.Post,
-      date: new Date(),
       comment: [],
     };
-    console.log(request);
-    //   axios
-    //     .post("localhost:5000/api/post/newpost", {
-    //       request,
-    //     })
-    //     .then((res) => console.log(res))
-    //     .catch((err) => console.log(err));
+    axios
+      .post("http://localhost:5000/api/posts/newpost", {
+        request,
+      })
+      .then((res) => history.push('/homepage'))
+      .catch((err) => console.log(err));
   };
   return (
-    <Form {...layout} name="nest-messages" onFinish={onFinish}>
+    <Form name="nest-messages" onFinish={onFinish}>
       <Form.Item name={["post", "Post"]} label="Post">
         <Input.TextArea />
       </Form.Item>
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 5 }}>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 1 }}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>

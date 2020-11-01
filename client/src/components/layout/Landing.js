@@ -7,7 +7,7 @@ const Landing = () => {
     <div>
       <Row>
         <Col span={12}>
-          {/* <Link
+          <Link
             to="/register"
             style={{
               width: "140px",
@@ -16,10 +16,10 @@ const Landing = () => {
             }}
           >
             Register
-          </Link> */}
+          </Link>
         </Col>
         <Col span={12}>
-          {/* <Link
+          <Link
             to="/login"
             style={{
               width: "140px",
@@ -28,7 +28,7 @@ const Landing = () => {
             }}
           >
             Log In
-          </Link> */}
+          </Link>
         </Col>
       </Row>
     </div>

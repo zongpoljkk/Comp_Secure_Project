@@ -8,8 +8,8 @@ router.post("/newpost", (req, res) => {
   console.log("new Post");
   const newPost = new Post({
     name: "Bosskung",
-    post: "Hello world",
-    comment: [],
+    post: req.body.request.post,
+    comment: [{name : "Boom" , post : "EIEI"},{name : "Za" , post : "Kuy rai"}],
   });
   newPost
     .save()
@@ -19,7 +19,15 @@ router.post("/newpost", (req, res) => {
 
 router.get("/allpost", (req, res) => {
   console.log("Allpost");
-  return 
+  Post.find()
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.post("/newcomment", (req, res) => {
+  console.log("new comment");
 });
 
 module.exports = router;
