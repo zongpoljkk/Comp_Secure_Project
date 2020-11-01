@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import moment from "moment";
 import axios from "axios";
-
+import { getAllPosts } from "../utils/action";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,17 +30,12 @@ const Posts = () => {
   const handleChange = () => {};
   const handleSubmit = () => {};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const results = await axios.get(
-        "http://localhost:5000/api/posts/allpost"
-      );
-      setPosts(results.data);
-      setIsLoading(false);
-      console.log(results.data);
-    };
-    fetchData();
+  useEffect(async () => {
+    setIsLoading(true);
+    // getAllPosts();
+    // console.log(results)
+    setPosts(await getAllPosts());
+    setIsLoading(false);
   }, []);
 
   const renderComment = (comment) => {
@@ -49,6 +44,7 @@ const Posts = () => {
     for (let i = 0; i != comment.length; i++) {
       field.push(
         <Comment
+          key={i}
           id={i}
           author={<a>{comment[i].name}</a>}
           avatar={
@@ -75,6 +71,7 @@ const Posts = () => {
         posts.map((value, index) => {
           return (
             <Comment
+              key={value._id}
               id={value._id}
               author={<a>{value.name}</a>}
               avatar={

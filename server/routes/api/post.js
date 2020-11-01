@@ -6,9 +6,10 @@ const Post = require("../../models/Post");
 
 router.post("/newpost", (req, res) => {
   console.log("new Post");
+  console.log(req.body.post)
   const newPost = new Post({
     name: "Bosskung",
-    post: req.body.request.post,
+    post: req.body.post,
     comment: [{name : "Boom" , post : "EIEI"},{name : "Za" , post : "Kuy rai"}],
   });
   newPost

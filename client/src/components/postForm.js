@@ -3,7 +3,7 @@ import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
+import { addPost } from "../utils/action";
 const layout = {
   labelCol: {
     span: 5,
@@ -16,18 +16,12 @@ const layout = {
 const PostForm = () => {
   const history = useHistory();
   const onFinish = (values) => {
-    console.log("new");
     const request = {
       name: "Bosskung",
       post: values.post.Post,
       comment: [],
     };
-    axios
-      .post("http://localhost:5000/api/posts/newpost", {
-        request,
-      })
-      .then((res) => history.push('/homepage'))
-      .catch((err) => console.log(err));
+    addPost(request)
   };
   return (
     <Form name="nest-messages" onFinish={onFinish}>
