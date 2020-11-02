@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { loginUser } from "../../utils/action";
-import { UserContext } from '../../context/UserContext';
-
+import { UserContext } from "../../context/UserContext";
+import { useHistory } from "react-router-dom";
 const layout = {
   labelCol: {
     span: 8,
@@ -23,37 +23,37 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
-  const user = useContext(UserContext);
-  console.log(user)
+  const [user, setUser] = useContext(UserContext);
+  const history = useHistory();
 
   const onEmailChange = (e) => {
     // TODO:
     // this.setState({ [e.target.id]: e.target.value });
-    setEmail(e.target.value)
+    setEmail(e.target.value);
   };
 
   const onPasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     const userData = {
       email: email,
       password: password,
     };
-    console.log(userData);
-    const decoded_jwt = loginUser(userData) // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-    user.setUser(decoded_jwt);
-    console.log(user);
+    const decoded_jwt = await loginUser(userData, history); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+
+    await setUser(decoded_jwt);
+    await console.log(user);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
     <div>
-    {console.log(user)}
+      {console.log(user)}
       <Link to="/">Back to home</Link>
       <div>
         <h1>Login</h1>

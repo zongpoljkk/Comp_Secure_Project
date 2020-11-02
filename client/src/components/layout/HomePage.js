@@ -4,14 +4,13 @@ import PostForm from "../postForm";
 import Posts from "../posts";
 
 const HomePage = () => {
-  
   return (
     <Fragment>
       <Row>
         <Col span={3}></Col>
         <Col span={18}>
           <PostForm />
-          <Posts/>
+          <Posts />
         </Col>
         <Col span={3}></Col>
       </Row>

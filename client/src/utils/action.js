@@ -13,33 +13,36 @@ export const registerUser = (userData, history) => {
 };
 
 // Login - get user token
-export const loginUser = (userData) => {
-  axios.post("http://localhost:5000/api/users/login", userData).then((res) => {
-    // Save to localStorage
+export const loginUser = async (userData, history) => {
+  const results = await axios
+    .post("http://localhost:5000/api/users/login", userData)
+    .then((res) => {
+      // Save to localStorage
+      console.log(res.data);
+      // Set token to localStorage
+      const { token } = res.data;
+      localStorage.setItem("jwtToken", token);
+      // Set token to Auth header
+      setAuthToken(token);
+      // Decode token to get user data
+      const decoded = jwt_decode(token);
 
-    // Set token to localStorage
-    const { token } = res.data;
-    localStorage.setItem("jwtToken", token);
-    // Set token to Auth header
-    setAuthToken(token);
-    // Decode token to get user data
-    const decoded = jwt_decode(token);
-    console.log(`jwt_decoded_token: ${decoded}`)
-    // Set current user
-    // setCurrentUser(decoded);
-    return decoded
-    
-  });
+      console.log(decoded);
+      console.log(`jwt_decoded_token: ${decoded}`);
+
+      // Route to Homepage
+      history.push("/homepage");
+      return decoded;
+    });
+  return results;
 };
 
 // Set logged in user
 export const setCurrentUser = (decoded) => {
   // TODO: Add userContext to check if user is login and set it using this function
-//   return {
-//     payload: decoded,
-//   };
-  
-  
+  //   return {
+  //     payload: decoded,
+  //   };
 };
 
 // // User loading
