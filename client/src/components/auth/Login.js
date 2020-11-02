@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { loginUser } from "../../utils/action";
+import { UserContext } from '../../context/UserContext';
 
 const layout = {
   labelCol: {
@@ -21,6 +23,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
+  const user = useContext(UserContext);
+  console.log(user)
 
   const onEmailChange = (e) => {
     // TODO:
@@ -38,6 +42,9 @@ const Login = () => {
       password: password,
     };
     console.log(userData);
+    const decoded_jwt = loginUser(userData) // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+    user.setUser(decoded_jwt);
+    console.log(user);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -46,6 +53,7 @@ const Login = () => {
 
   return (
     <div>
+    {console.log(user)}
       <Link to="/">Back to home</Link>
       <div>
         <h1>Login</h1>

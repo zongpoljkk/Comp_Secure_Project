@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 // Registrer User
 export const registerUser = (userData, history) => {
   axios
-    .post("/api/user/register", userData)
+    .post("http://localhost:5000/api/users/register", userData)
     .then((res) => history.push("/login")) // redirect to login on successful register
     .catch((err) => {
       console.error("Error registering");
@@ -14,7 +14,7 @@ export const registerUser = (userData, history) => {
 
 // Login - get user token
 export const loginUser = (userData) => {
-  axios.post("/api/users/login", userData).then((res) => {
+  axios.post("http://localhost:5000/api/users/login", userData).then((res) => {
     // Save to localStorage
 
     // Set token to localStorage
@@ -24,17 +24,22 @@ export const loginUser = (userData) => {
     setAuthToken(token);
     // Decode token to get user data
     const decoded = jwt_decode(token);
+    console.log(`jwt_decoded_token: ${decoded}`)
     // Set current user
-    setCurrentUser(decoded);
+    // setCurrentUser(decoded);
+    return decoded
+    
   });
 };
 
 // Set logged in user
 export const setCurrentUser = (decoded) => {
   // TODO: Add userContext to check if user is login and set it using this function
-  return {
-    payload: decoded,
-  };
+//   return {
+//     payload: decoded,
+//   };
+  
+  
 };
 
 // // User loading

@@ -1,26 +1,36 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Menu } from "antd";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [menuClicked, setMenuClicked] = useState({
-    current: "thonburian",
-  });
 
   const handleClick = (e) => {
-    console.log("click", e);
-    setMenuClicked({
+    setMenuHighlight({
       current: e.key,
     });
   };
 
+  const handleLocationChange = () => {
+    let baseIndex = 1;
+    let location = window.location.pathname.split("/");
+    console.log(location);
+    return location[baseIndex] === "" ? "home" : location[baseIndex];
+  };
+
+  const [menuHighlight, setMenuHighlight] = useState({
+    current: handleLocationChange(),
+  });
+
+
   return (
     <div>
       <Menu
-        onClick={() => handleClick}
-        selectedKeys={[menuClicked.current]}
+        onClick={(e) => handleClick(e)}
+        selectedKeys={[menuHighlight.current]}
         mode="horizontal"
       >
-        <Menu.Item key="thonburian">Homepage</Menu.Item>
+        <Menu.Item key="/"></Menu.Item>
+        <Link to="/">Homepage</Link>
       </Menu>
     </div>
   );
