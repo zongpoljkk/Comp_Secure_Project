@@ -1,14 +1,7 @@
-import React, { createElement, useState, Fragment, useEffect } from "react";
-import { Tooltip, Comment, Avatar, Form, Button, List, Input } from "antd";
+import React, { useState, Fragment, useEffect } from "react";
+import { Tooltip, Comment, Avatar, Form, Button, Input } from "antd";
 import "antd/dist/antd.css";
-import {
-  DislikeOutlined,
-  LikeOutlined,
-  DislikeFilled,
-  LikeFilled,
-} from "@ant-design/icons";
 import moment from "moment";
-import axios from "axios";
 import { getAllPosts, addComment } from "../utils/action";
 
 const { TextArea } = Input;

@@ -1,8 +1,6 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { addPost } from "../utils/action";
 const layout = {
   labelCol: {
@@ -14,7 +12,7 @@ const layout = {
 };
 
 const PostForm = () => {
-  const history = useHistory();
+ 
   const onFinish = (values) => {
     const request = {
       name: "Bosskung",
