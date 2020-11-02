@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 
 // Registrer User
 export const registerUser = (userData, history) => {
-    axios.post("/api/user/register", userData)
+    axios.post("http://localhost:5000/api/user/register", userData)
         .then(res => history.push("/login")) // redirect to login on successful register
         .catch(err => {
             console.error("Error registering")

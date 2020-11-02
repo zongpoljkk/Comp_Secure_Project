@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from "antd";
+import { registerUser } from "../../utils/action";
 
 const layout = {
   labelCol: {
@@ -24,20 +25,22 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState({});
 
+  const history = useHistory();
+
   const onNameChange = (e) => {
-    setName(e.target.value)
+    setName(e.target.value);
   };
 
   const onEmailChange = (e) => {
-    setEmail(e.target.value)
+    setEmail(e.target.value);
   };
 
   const onPasswordChange = (e) => {
-    setPassword(e.target.value)
+    setPassword(e.target.value);
   };
 
   const onPassword2Change = (e) => {
-    setPassword2(e.target.value)
+    setPassword2(e.target.value);
   };
 
   const onSubmit = (e) => {
@@ -48,6 +51,7 @@ const Register = () => {
       password2: password2,
     };
     console.log(newUser);
+    registerUser(newUser, history);
   };
 
   const onFinishFailed = (errorInfo) => {
