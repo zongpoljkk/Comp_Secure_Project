@@ -1,8 +1,9 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect, useContext } from "react";
 import { Tooltip, Comment, Avatar, Form, Button, Input } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
 import { getAllPosts, addComment } from "../utils/action";
+import { UserContext } from "../context/UserContext";
 
 const { TextArea } = Input;
 const Editor = ({ id, onChange, onSubmit }) => (
@@ -20,10 +21,11 @@ const Editor = ({ id, onChange, onSubmit }) => (
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState({
     id: "",
-    name: "Boom",
+    name: user.name,
     comment: "",
   });
   const handleChange = (e) => {
@@ -31,7 +33,7 @@ const Posts = () => {
   };
   const handleSubmit = () => {
     console.log(comments);
-    addComment(comments)
+    addComment(comments);
   };
 
   useEffect(async () => {

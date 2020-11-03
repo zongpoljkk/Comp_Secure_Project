@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "../../context/UserContext";
+import { Typography } from "antd";
+import axios from "axios";
 const Navbar = () => {
-
+  const { Title } = Typography;
+  const [user, setUser] = useContext(UserContext);
   const handleClick = (e) => {
     setMenuHighlight({
       current: e.key,
@@ -21,6 +24,12 @@ const Navbar = () => {
     current: handleLocationChange(),
   });
 
+  
+  useEffect(() => {
+    console.log(axios.defaults.headers.common["Authorization"])
+    
+  }, [axios.defaults.headers.common["Authorization"]])
+    
 
   return (
     <div>
@@ -31,6 +40,7 @@ const Navbar = () => {
       >
         <Menu.Item key="/"></Menu.Item>
         <Link to="/">Homepage</Link>
+        <Menu.Item key="/">{user.name}</Menu.Item>
       </Menu>
     </div>
   );

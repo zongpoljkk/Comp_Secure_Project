@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
 import { addPost } from "../utils/action";
+import { UserContext } from "../context/UserContext";
 const layout = {
   labelCol: {
     span: 5,
@@ -12,14 +13,15 @@ const layout = {
 };
 
 const PostForm = () => {
- 
+  const [user, setUser] = useContext(UserContext);
   const onFinish = (values) => {
-    const request = {
-      name: "Bosskung",
-      post: values.post.Post,
-      comments: [],
-    };
-    addPost(request)
+    // const request = {
+    //   name: user.name,
+    //   post: values.post.Post,
+    //   comments: [],
+    // };
+    // addPost(request);
+    console.log(user)
   };
   return (
     <Form name="nest-messages" onFinish={onFinish}>
