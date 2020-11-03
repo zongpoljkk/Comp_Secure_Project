@@ -3,6 +3,8 @@ import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
 import { addPost } from "../utils/action";
 import { UserContext } from "../context/UserContext";
+import { getUsername } from "../utils/action";
+
 const layout = {
   labelCol: {
     span: 5,
@@ -21,7 +23,10 @@ const PostForm = () => {
     //   comments: [],
     // };
     // addPost(request);
-    console.log(user)
+    // console.log(user);
+    console.log(localStorage);
+    const name = getUsername(localStorage.jwtToken);
+    setUser(name);
   };
   return (
     <Form name="nest-messages" onFinish={onFinish}>

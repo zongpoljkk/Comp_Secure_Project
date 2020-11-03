@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 
 const Landing = () => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   return (
     <div>
       <Row>

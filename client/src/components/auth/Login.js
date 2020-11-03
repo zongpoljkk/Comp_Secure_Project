@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import { loginUser } from "../../utils/action";
@@ -41,19 +41,20 @@ const Login = () => {
       email: email,
       password: password,
     };
+    console.log(userData);
     const decoded_jwt = await loginUser(userData, history); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-
     await setUser(decoded_jwt);
-    await console.log(user);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   return (
     <div>
-      {console.log(user)}
       <Link to="/">Back to home</Link>
       <div>
         <h1>Login</h1>

@@ -47,7 +47,7 @@ const Posts = () => {
     for (let i = 0; i != comment.length; i++) {
       field.push(
         <Comment
-          key={i}
+          key={`comment_${i}`}
           id={i}
           author={<a>{comment[i].name}</a>}
           avatar={

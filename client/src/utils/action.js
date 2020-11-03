@@ -18,7 +18,7 @@ export const loginUser = async (userData, history) => {
     .post("http://localhost:5000/api/users/login", userData)
     .then((res) => {
       // Save to localStorage
-      console.log(res.data);
+
       // Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
@@ -28,7 +28,6 @@ export const loginUser = async (userData, history) => {
       const decoded = jwt_decode(token);
 
       console.log(decoded);
-      console.log(`jwt_decoded_token: ${decoded}`);
 
       // Route to Homepage
       history.push("/homepage");
@@ -37,6 +36,12 @@ export const loginUser = async (userData, history) => {
   return results;
 };
 
+// Decode token
+export const getUsername = (token) => {
+  const decode = jwt_decode(token);
+  console.log(decode.name);
+  return decode.name;
+};
 // Set logged in user
 export const setCurrentUser = (decoded) => {
   // TODO: Add userContext to check if user is login and set it using this function
@@ -55,7 +60,7 @@ export const setCurrentUser = (decoded) => {
 // Log user out
 export const logoutUser = () => {
   // Remove token from local storage
-  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("jwtToken")
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set is Authenticated to false

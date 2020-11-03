@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Row, Col } from "antd";
 import { registerUser } from "../../utils/action";

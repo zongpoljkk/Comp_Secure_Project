@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Menu, Button } from "antd";
+import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { Typography } from "antd";
-import axios from "axios";
+import { getUsername } from "../../utils/action";
 const Navbar = () => {
   const { Title } = Typography;
-  const [user, setUser] = useContext(UserContext);
+  const [user, setUser] = useState("");
+  const history = useHistory();
   const handleClick = (e) => {
+    console.log(e.key);
     setMenuHighlight({
       current: e.key,
     });
@@ -17,6 +19,8 @@ const Navbar = () => {
     let baseIndex = 1;
     let location = window.location.pathname.split("/");
     console.log(location);
+    console.log(location[baseIndex]);
+
     return location[baseIndex] === "" ? "home" : location[baseIndex];
   };
 
@@ -24,13 +28,17 @@ const Navbar = () => {
     current: handleLocationChange(),
   });
 
-  
-  useEffect(() => {
-    console.log(axios.defaults.headers.common["Authorization"])
-    
-  }, [axios.defaults.headers.common["Authorization"]])
-    
+  const handleLogout = () => {
+    console.log("logout");
+    history.push("/login");
+    localStorage.clear();
+  };
 
+  useEffect(() => {
+    if (!!localStorage.jwtToken) {
+      setUser(getUsername(localStorage.jwtToken));
+    }
+  }, []);
   return (
     <div>
       <Menu
@@ -40,7 +48,12 @@ const Navbar = () => {
       >
         <Menu.Item key="/"></Menu.Item>
         <Link to="/">Homepage</Link>
-        <Menu.Item key="/">{user.name}</Menu.Item>
+        {menuHighlight.current != "login" && (
+          <Menu.Item key="2">{user}</Menu.Item>
+        )}
+        <Button type="link" onClick={handleLogout}>
+          Log out
+        </Button>
       </Menu>
     </div>
   );
