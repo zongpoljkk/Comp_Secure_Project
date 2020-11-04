@@ -45,6 +45,7 @@ const Navbar = () => {
         onClick={(e) => handleClick(e)}
         selectedKeys={[menuHighlight.current]}
         mode="horizontal"
+        style={{ marginBottom: "40px" }}
       >
         <Menu.Item key="/"></Menu.Item>
         <Link to="/">Homepage</Link>
