@@ -1,4 +1,5 @@
 const { json } = require("body-parser");
+const { request } = require("express");
 const express = require("express");
 const router = express.Router();
 
@@ -6,14 +7,11 @@ const Post = require("../../models/Post");
 
 router.post("/newpost", (req, res) => {
   console.log("new Post");
-  console.log(req.body.post);
+  console.log(req.body);
   const newPost = new Post({
-    name: "Bosskung",
+    name: req.body.name,
     post: req.body.post,
-    comments: [
-      { name: "Boom", comment: "EIEI" },
-      { name: "Za", comment: "Kuy rai" },
-    ],
+    comments: [],
   });
   newPost
     .save()

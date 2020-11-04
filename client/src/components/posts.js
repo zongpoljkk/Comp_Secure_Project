@@ -2,7 +2,7 @@ import React, { useState, Fragment, useEffect, useContext } from "react";
 import { Tooltip, Comment, Avatar, Form, Button, Input } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
-import { getAllPosts, addComment } from "../utils/action";
+import { getAllPosts, addComment, getUsername } from "../utils/action";
 import { UserContext } from "../context/UserContext";
 
 const { TextArea } = Input;
@@ -29,7 +29,8 @@ const Posts = () => {
     comment: "",
   });
   const handleChange = (e) => {
-    setComments({ id: e.target.id, name: "Boom", comment: e.target.value });
+    console.log(user);
+    setComments({ id: e.target.id, name: user, comment: e.target.value });
   };
   const handleSubmit = () => {
     console.log(comments);
@@ -40,6 +41,9 @@ const Posts = () => {
     setIsLoading(true);
     setPosts(await getAllPosts());
     setIsLoading(false);
+
+    const name = await getUsername(localStorage.jwtToken);
+    setUser(name);
   }, []);
 
   const renderComment = (comment) => {

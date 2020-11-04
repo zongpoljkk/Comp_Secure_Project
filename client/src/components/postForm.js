@@ -17,16 +17,14 @@ const layout = {
 const PostForm = () => {
   const [user, setUser] = useContext(UserContext);
   const onFinish = (values) => {
-    // const request = {
-    //   name: user.name,
-    //   post: values.post.Post,
-    //   comments: [],
-    // };
-    // addPost(request);
-    // console.log(user);
-    console.log(localStorage);
     const name = getUsername(localStorage.jwtToken);
     setUser(name);
+    const request = {
+      name: name,
+      post: values.post.Post,
+      comments: [],
+    };
+    addPost(request);
   };
   return (
     <Form name="nest-messages" onFinish={onFinish}>
