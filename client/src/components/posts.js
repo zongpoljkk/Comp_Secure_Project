@@ -41,9 +41,12 @@ const Posts = () => {
     setIsLoading(true);
     setPosts(await getAllPosts());
     setIsLoading(false);
-
-    const name = await getUsername(localStorage.jwtToken);
-    setUser(name);
+    if (!!localStorage.jwtToken) {
+      console.log("have token");
+      setUser(getUsername(localStorage.jwtToken));
+    }
+    // const name = await getUsername(localStorage.jwtToken);
+    // setUser(name);
   }, []);
 
   const renderComment = (comment) => {

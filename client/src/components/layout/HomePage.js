@@ -8,7 +8,6 @@ const HomePage = () => {
   return (
     <Fragment>
       <Navbar />
-
       <Row>
         <Col span={3}></Col>
         <Col span={18}>

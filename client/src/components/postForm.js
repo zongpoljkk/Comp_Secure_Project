@@ -26,6 +26,9 @@ const PostForm = () => {
     };
     addPost(request);
   };
+  const checkToken = () => {
+    console.log(localStorage)
+  }
   return (
     <Form name="nest-messages" onFinish={onFinish}>
       <Form.Item name={["post", "Post"]} label="Post">
@@ -34,6 +37,9 @@ const PostForm = () => {
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 1 }}>
         <Button type="primary" htmlType="submit">
           Submit
+        </Button>
+        <Button type="primary" htmlType="submit" style={{marginLeft:"10px"}} onClick={checkToken}>
+          Check Token Pap
         </Button>
       </Form.Item>
     </Form>

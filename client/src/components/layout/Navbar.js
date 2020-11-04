@@ -5,7 +5,6 @@ import { UserContext } from "../../context/UserContext";
 import { Typography } from "antd";
 import { getUsername } from "../../utils/action";
 const Navbar = () => {
-  const { Title } = Typography;
   const [user, setUser] = useState("");
   const history = useHistory();
   const handleClick = (e) => {
@@ -35,8 +34,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    console.log("homepage_useeffect");
+    console.log(localStorage);
     if (!!localStorage.jwtToken) {
+      console.log("have token");
       setUser(getUsername(localStorage.jwtToken));
+    } else {
+      history.push("/login");
     }
   }, []);
   return (
