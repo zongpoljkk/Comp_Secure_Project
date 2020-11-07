@@ -41,7 +41,6 @@ const Login = () => {
       email: email,
       password: password,
     };
-    console.log(userData);
     const decoded_jwt = await loginUser(userData, history); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
     await setUser(decoded_jwt);
   };

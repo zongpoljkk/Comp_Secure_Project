@@ -22,12 +22,11 @@ export const loginUser = async (userData, history) => {
       // Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
+      console.log(token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-
-      console.log(decoded);
 
       // Route to Homepage
       history.push("/homepage");
@@ -39,7 +38,6 @@ export const loginUser = async (userData, history) => {
 // Decode token
 export const getUsername = (token) => {
   const decode = jwt_decode(token);
-  console.log(decode.name);
   return decode.name;
 };
 // Set logged in user
@@ -60,7 +58,7 @@ export const setCurrentUser = (decoded) => {
 // Log user out
 export const logoutUser = () => {
   // Remove token from local storage
-  localStorage.removeItem("jwtToken")
+  localStorage.removeItem("jwtToken");
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set is Authenticated to false

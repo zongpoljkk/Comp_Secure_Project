@@ -29,11 +29,9 @@ const Posts = () => {
     comment: "",
   });
   const handleChange = (e) => {
-    console.log(user);
     setComments({ id: e.target.id, name: user, comment: e.target.value });
   };
   const handleSubmit = () => {
-    console.log(comments);
     addComment(comments);
   };
 
@@ -42,7 +40,6 @@ const Posts = () => {
     setPosts(await getAllPosts());
     setIsLoading(false);
     if (!!localStorage.jwtToken) {
-      console.log("have token");
       setUser(getUsername(localStorage.jwtToken));
     }
     // const name = await getUsername(localStorage.jwtToken);

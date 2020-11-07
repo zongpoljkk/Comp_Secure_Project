@@ -8,7 +8,6 @@ const Navbar = () => {
   const [user, setUser] = useState("");
   const history = useHistory();
   const handleClick = (e) => {
-    console.log(e.key);
     setMenuHighlight({
       current: e.key,
     });
@@ -17,9 +16,6 @@ const Navbar = () => {
   const handleLocationChange = () => {
     let baseIndex = 1;
     let location = window.location.pathname.split("/");
-    console.log(location);
-    console.log(location[baseIndex]);
-
     return location[baseIndex] === "" ? "home" : location[baseIndex];
   };
 
@@ -28,16 +24,12 @@ const Navbar = () => {
   });
 
   const handleLogout = () => {
-    console.log("logout");
     history.push("/login");
     localStorage.clear();
   };
 
   useEffect(() => {
-    console.log("homepage_useeffect");
-    console.log(localStorage);
     if (!!localStorage.jwtToken) {
-      console.log("have token");
       setUser(getUsername(localStorage.jwtToken));
     } else {
       history.push("/login");
