@@ -3,22 +3,26 @@ const Schema = mongoose.Schema;
 
 // Crete Schema
 const UserSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  isModerator: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

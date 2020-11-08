@@ -23,7 +23,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const history = useHistory();
 
   const onEmailChange = (e) => {
@@ -42,7 +42,12 @@ const Login = () => {
       password: password,
     };
     const decoded_jwt = await loginUser(userData, history); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
-    await setUser(decoded_jwt);
+   
+    setUser({
+      ...user,
+      name: decoded_jwt.name,
+      isModerator: decoded_jwt.isModerator,
+    });
   };
 
   const onFinishFailed = (errorInfo) => {

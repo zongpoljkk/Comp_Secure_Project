@@ -26,7 +26,6 @@ export const loginUser = async (userData, history) => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-
       // Route to Homepage
       history.push("/homepage");
       return decoded;
@@ -35,9 +34,9 @@ export const loginUser = async (userData, history) => {
 };
 
 // Decode token
-export const getUsername = (token) => {
+export const decodeToken = (token) => {
   const decode = jwt_decode(token);
-  return decode.name;
+  return decode;
 };
 // Set logged in user
 export const setCurrentUser = (decoded) => {

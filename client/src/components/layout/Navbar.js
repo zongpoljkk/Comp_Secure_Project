@@ -3,7 +3,7 @@ import { Menu, Button } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { Typography } from "antd";
-import { getUsername } from "../../utils/action";
+import { decodeToken } from "../../utils/action";
 const Navbar = () => {
   const [user, setUser] = useState("");
   const history = useHistory();
@@ -30,7 +30,8 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!!localStorage.jwtToken) {
-      setUser(getUsername(localStorage.jwtToken));
+      const { name } = decodeToken(localStorage.jwtToken);
+      setUser(name)
     } else {
       history.push("/login");
     }

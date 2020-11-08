@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
 import "antd/dist/antd.css";
-import { addPost } from "../utils/action";
+import { addPost, decodeToken } from "../utils/action";
 import { UserContext } from "../context/UserContext";
-import { getUsername } from "../utils/action";
 
 const layout = {
   labelCol: {
@@ -15,10 +14,9 @@ const layout = {
 };
 
 const PostForm = () => {
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const onFinish = (values) => {
-    const name = getUsername(localStorage.jwtToken);
-    setUser(name);
+    const { name } = decodeToken(localStorage.jwtToken);
     const request = {
       name: name,
       post: values.post.Post,
@@ -27,8 +25,10 @@ const PostForm = () => {
     addPost(request);
   };
   const checkToken = () => {
-    console.log(localStorage)
-  }
+    console.log(localStorage);
+    console.log(user);
+    console.log(decodeToken(localStorage.jwtToken));
+  };
   return (
     <Form name="nest-messages" onFinish={onFinish}>
       <Form.Item name={["post", "Post"]} label="Post">
@@ -38,7 +38,12 @@ const PostForm = () => {
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
-        <Button type="primary" htmlType="submit" style={{marginLeft:"10px"}} onClick={checkToken}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ marginLeft: "10px" }}
+          onClick={checkToken}
+        >
           Check Token Pap
         </Button>
       </Form.Item>

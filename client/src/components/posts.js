@@ -5,7 +5,7 @@ import moment from "moment";
 import {
   getAllPosts,
   addComment,
-  getUsername,
+  decodeToken,
   editPost,
   editComment,
 } from "../utils/action";
@@ -27,7 +27,7 @@ const Editor = ({ id, onChange, onSubmit }) => (
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [editValue, setEditValue] = useState("");
   const [editID, setEditID] = useState();
@@ -37,35 +37,37 @@ const Posts = () => {
     name: user.name,
     comment: "",
   });
+
   const handleChange = (e) => {
-    setComments({ id: e.target.id, name: user, comment: e.target.value });
+    setComments({ id: e.target.id, name: user.name, comment: e.target.value });
   };
+
   const handleSubmit = () => {
     addComment(comments);
   };
+
   const handleEdit = (value, id, isComment) => {
     setEditValue(value);
     setEditID(id);
     setShoudEditComment(isComment);
     setVisible(true);
   };
+
   const handleOk = () => {
     setVisible(false);
-    console.log(`Edit ${editValue}, ID ${editID}`);
     if (shoudEditComment) {
       editComment({ _id: editID, value: editValue });
     } else {
       editPost({ _id: editID, value: editValue });
     }
   };
+
   const handleCancel = () => {
     setVisible(false);
   };
+
   useEffect(async () => {
     setPosts(await getAllPosts());
-    if (!!localStorage.jwtToken) {
-      setUser(getUsername(localStorage.jwtToken));
-    }
   }, []);
 
   const renderComment = (comment) => {
@@ -88,14 +90,18 @@ const Posts = () => {
               <span>{moment().fromNow()}</span>
             </Tooltip>
           }
-          actions={[
-            <span
-              key="comment-list-reply-to-0"
-              onClick={() => handleEdit(comment[i].comment, comment[i]._id,true)}
-            >
-              Edit comment <EditOutlined />
-            </span>,
-          ]}
+          actions={
+            (user.isModerator || user.name == comment[i].name) && [
+              <span
+                key="comment-list-reply-to-0"
+                onClick={() =>
+                  handleEdit(comment[i].comment, comment[i]._id, true)
+                }
+              >
+                Edit comment <EditOutlined />
+              </span>,
+            ]
+          }
         ></Comment>
       );
     }
@@ -122,14 +128,16 @@ const Posts = () => {
                 <span>{moment().fromNow()}</span>
               </Tooltip>
             }
-            actions={[
-              <span
-                key="comment-list-reply-to-0"
-                onClick={() => handleEdit(value.post, value._id,false)}
-              >
-                Edit post <EditOutlined />
-              </span>,
-            ]}
+            actions={
+              (user.isModerator || user.name == value.name) && [
+                <span
+                  key="comment-list-reply-to-0"
+                  onClick={() => handleEdit(value.post, value._id, false)}
+                >
+                  Edit post <EditOutlined />
+                </span>,
+              ]
+            }
           >
             {renderComment(value.comments)}
             <Editor
