@@ -1,7 +1,6 @@
 import axios from "axios";
-import setAuthToken from "./setAuthToken";
 import jwt_decode from "jwt-decode";
-
+import { getToken, setAuthToken } from "./setAuthToken";
 // Registrer User
 export const registerUser = (userData, history) => {
   axios
@@ -75,14 +74,22 @@ export const addPost = (post) => {
 
 // Fetch all posts
 export const getAllPosts = async () => {
-  const results = await axios.get("http://localhost:5000/api/posts/allpost");
+  const results = await axios.get("http://localhost:5000/api/posts/allpost", {
+    headers: {
+      Authorization: getToken(),
+    },
+  });
   return results.data;
 };
 
 // Add new Comment
 export const addComment = (comment) => {
   axios
-    .post("http://localhost:5000/api/posts/newcomment", comment)
+    .post("http://localhost:5000/api/posts/newcomment", comment, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
