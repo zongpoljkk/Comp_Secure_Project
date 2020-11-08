@@ -67,7 +67,11 @@ export const logoutUser = () => {
 // Add new post
 export const addPost = (post) => {
   axios
-    .post("http://localhost:5000/api/posts/newpost", post)
+    .post("http://localhost:5000/api/posts/newpost", post, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
@@ -86,6 +90,30 @@ export const getAllPosts = async () => {
 export const addComment = (comment) => {
   axios
     .post("http://localhost:5000/api/posts/newcomment", comment, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
+
+export const editPost = (post) => {
+  console.log(post);
+  axios
+    .post("http://localhost:5000/api/posts/edit-post", post, {
+      headers: {
+        Authorization: getToken(),
+      },
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
+
+export const editComment = (comment) => {
+  console.log(comment);
+  axios
+    .post("http://localhost:5000/api/posts/edit-comment", comment, {
       headers: {
         Authorization: getToken(),
       },

@@ -29,9 +29,8 @@ router.get("/allpost", (req, res) => {
 });
 
 router.post("/newcomment", (req, res) => {
-  
   const newComment = { name: req.body.name, comment: req.body.comment };
-  console.log(newComment)
+  console.log(newComment);
   Post.findOneAndUpdate(
     { _id: req.body.id },
     {
@@ -44,4 +43,25 @@ router.post("/newcomment", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.post("/edit-post", (req, res) => {
+  console.log(req.body);
+  // const editValue = { _id : res.body._id , editValue : req.body.value}
+  Post.findByIdAndUpdate({ _id: req.body._id }, { post: req.body.value })
+    .then((post) => res.json(post))
+    .catch((err) => console.log(err));
+});
+
+router.post("/edit-comment", (req, res) => {
+  console.log(req.body);
+  Post.update(
+    { "comments._id": req.body._id },
+    {
+      $set: {
+        "comments.$.comment": req.body.value,
+      },
+    }
+  )
+    .then((comment) => res.json(comment))
+    .catch((err) => res.json(err));
+});
 module.exports = router;
