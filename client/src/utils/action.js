@@ -21,7 +21,6 @@ export const loginUser = async (userData, history) => {
       // Set token to localStorage
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);
-      console.log(token);
       // Set token to Auth header
       setAuthToken(token);
       // Decode token to get user data
@@ -64,21 +63,27 @@ export const logoutUser = () => {
 };
 
 // Add new post
-export const addPost = (post) => {
-  axios
+export const addPost = async (post) => {
+  const status = await axios
     .post("http://localhost:5000/api/posts/newpost", post, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: getToken(),
       },
     })
-    .then((res) => console.log(res))
+    .then((res) => {
+      console.log(res);
+      return "200";
+    })
     .catch((err) => console.log(err));
+  return status;
 };
 
 // Fetch all posts
 export const getAllPosts = async () => {
   const results = await axios.get("http://localhost:5000/api/posts/allpost", {
     headers: {
+      "Content-Type": "application/json",
       Authorization: getToken(),
     },
   });
@@ -86,22 +91,30 @@ export const getAllPosts = async () => {
 };
 
 // Add new Comment
-export const addComment = (comment) => {
-  axios
+export const addComment = async (comment) => {
+  const status = await axios
     .post("http://localhost:5000/api/posts/newcomment", comment, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: getToken(),
       },
     })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => {
+      console.log(res);
+      return "200";
+    })
+    .catch((err) => {
+      console.log(err);
+      return "500";
+    });
+  return status;
 };
 
 export const editPost = (post) => {
-  console.log(post);
   axios
     .post("http://localhost:5000/api/posts/edit-post", post, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: getToken(),
       },
     })
@@ -110,10 +123,10 @@ export const editPost = (post) => {
 };
 
 export const editComment = (comment) => {
-  console.log(comment);
   axios
     .post("http://localhost:5000/api/posts/edit-comment", comment, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: getToken(),
       },
     })

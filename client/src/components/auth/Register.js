@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Input, Button, Row, Col } from "antd";
+import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { registerUser } from "../../utils/action";
+
+const { Title } = Typography;
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 12,
   },
   wrapperCol: {
-    span: 16,
+    span: 25,
   },
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
+    offset: 12,
     span: 16,
   },
 };
@@ -60,92 +62,94 @@ const Register = () => {
 
   return (
     <div>
-      <Row>
-        <Link to="/">Back to Home</Link>
+      <Row style={{ marginTop: "40px" }}>
+        <Col span={8}></Col>
+        <Col span={8}>
+          <Title style={{ textAlignLast: "center" }}>Register</Title>
+        </Col>
       </Row>
-      <Row>
-        <Col span={24}>
-          <Row>Register</Row>
-          <Row>
+      <Row style={{ marginTop: "20px" , marginBottom : "10px"}}>
+        <Col span={8}></Col>
+        <Col span={8}>
+          <Row style={{ justifyContent: "space-around" }}>
+            <Link to="/">Back to Home</Link>
             <Link to="/login">Already have an account?</Link>
           </Row>
         </Col>
       </Row>
-      <Row>
-        <Form
-          {...layout}
-          name="register"
-          onFinish={onSubmit}
-          onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Please input your name!",
-              },
-            ]}
-            onChange={onNameChange}
-          >
-            <Input />
-          </Form.Item>
+      <Row style={{ justifyContent: "center" }}>
+        <Col span={7}></Col>
+        <Col span={9}>
+          <Row>
+            <Form
+              {...layout}
+              name="register"
+              onFinish={onSubmit}
+              onFinishFailed={onFinishFailed}
+            >
+              <Form.Item
+                label="Name"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your name!",
+                  },
+                ]}
+                onChange={onNameChange}
+              >
+                <Input />
+              </Form.Item>
 
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your email!",
-              },
-            ]}
-            onChange={onEmailChange}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-            onChange={onPasswordChange}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            label="Confirm your Password"
-            name="password2"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-            onChange={onPassword2Change}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          {/* <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item> */}
-
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Sign up
-            </Button>
-          </Form.Item>
-        </Form>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email!",
+                  },
+                ]}
+                onChange={onEmailChange}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+                onChange={onPasswordChange}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                label="Confirm your Password"
+                name="password2"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                ]}
+                onChange={onPassword2Change}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit">
+                  Sign up
+                </Button>
+              </Form.Item>
+            </Form>
+          </Row>
+        </Col>
+        <Col span={7}></Col>
       </Row>
-      <Row></Row>
     </div>
   );
 };

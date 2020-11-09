@@ -5,12 +5,13 @@ import moment from "moment";
 import {
   getAllPosts,
   addComment,
-  decodeToken,
   editPost,
   editComment,
+  addPost,
 } from "../utils/action";
 import { UserContext } from "../context/UserContext";
 import { EditOutlined } from "@ant-design/icons";
+
 const { TextArea } = Input;
 const Editor = ({ id, onChange, onSubmit }) => (
   <>
@@ -42,8 +43,8 @@ const Posts = () => {
     setComments({ id: e.target.id, name: user.name, comment: e.target.value });
   };
 
-  const handleSubmit = () => {
-    addComment(comments);
+  const handleSubmit = async () => {
+    const status = await addComment(comments);
   };
 
   const handleEdit = (value, id, isComment) => {
@@ -86,8 +87,12 @@ const Posts = () => {
           }
           content={<p>{comment[i].comment}</p>}
           datetime={
-            <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-              <span>{moment().fromNow()}</span>
+            <Tooltip>
+              <span>
+                {moment(comment[i].date, "YYYY MM DDT hh:mm:ss").format(
+                  "DD/MM/YYYY hh:mm:ss"
+                )}
+              </span>
             </Tooltip>
           }
           actions={
@@ -124,8 +129,12 @@ const Posts = () => {
             }
             content={<p>{value.post}</p>}
             datetime={
-              <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-                <span>{moment().fromNow()}</span>
+              <Tooltip>
+                <span>
+                  {moment(value.date, "YYYY MM DDT hh:mm:ss").format(
+                    "DD/MM/YYYY hh:mm:ss"
+                  )}
+                </span>
               </Tooltip>
             }
             actions={
@@ -141,6 +150,7 @@ const Posts = () => {
           >
             {renderComment(value.comments)}
             <Editor
+              index={index}
               id={value._id}
               onChange={handleChange}
               onSubmit={handleSubmit}
@@ -149,7 +159,7 @@ const Posts = () => {
         );
       })}
       <Modal
-        title="Basic Modal"
+        title="Edit"
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}

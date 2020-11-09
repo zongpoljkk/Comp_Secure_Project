@@ -22,8 +22,10 @@ router.post("/newpost", (req, res) => {
 router.get("/allpost", (req, res) => {
   console.log("Allpost");
   Post.find()
+    .sort({ date: "desc" })
     .then((post) => {
       res.json(post);
+      console.log(post);
     })
     .catch((err) => console.log(err));
 });
@@ -39,7 +41,10 @@ router.post("/newcomment", (req, res) => {
       },
     }
   )
-    .then((comment) => res.json(comment))
+    .then((comment) => {
+      res.json(comment);
+      return 200;
+    })
     .catch((err) => console.log(err));
 });
 

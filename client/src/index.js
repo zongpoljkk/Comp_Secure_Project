@@ -7,13 +7,10 @@ import { UserProvider } from "./context/UserContext";
 import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.render(
-  // <React.StrictMode>
-  // <AuthProvider>
   <UserProvider>
     <App />
   </UserProvider>,
-  // </AuthProvider>,
-  // </React.StrictMode>,
+
   document.getElementById("root")
 );
 
