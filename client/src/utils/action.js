@@ -135,25 +135,39 @@ export const editComment = (comment) => {
 };
 
 export const deleteComment = (id) => {
-  axios
-  .post("http://localhost:5000/api/posts/delete-comment", id, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-  })
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-}
+  const result = axios
+    .post("http://localhost:5000/api/posts/delete-comment", id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return "200";
+    })
+    .catch((err) => {
+      console.log(err);
+      return "400";
+    });
+  return result;
+};
 
 export const deletePost = (id) => {
-  axios
-  .post("http://localhost:5000/api/posts/delete-post", id, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: getToken(),
-    },
-  })
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-}
+  const result = axios
+    .post("http://localhost:5000/api/posts/delete-post", id, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getToken(),
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      return "200";
+    })
+    .catch((err) => {
+      console.log(err);
+      return "400";
+    });
+  return result;
+};

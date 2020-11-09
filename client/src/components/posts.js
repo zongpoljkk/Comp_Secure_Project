@@ -56,7 +56,12 @@ const Posts = ({ onAddPost }) => {
   const [editValue, setEditValue] = useState("");
   const [editID, setEditID] = useState();
   const [shoudEditComment, setShoudEditComment] = useState(false);
+  const [shoudDeleteComment, setShoudDeleteComment] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [deleteValue, setDeleteValue] = useState({
+    owner_id: "",
+    _id: "",
+  });
   const [comments, setComments] = useState({
     id: "",
     name: user.name,
@@ -94,33 +99,24 @@ const Posts = ({ onAddPost }) => {
     setIsDelete(false);
   };
 
-  const showDeleteConfirm = (id, ownerId, isComment) => {
-    confirm({
-      title: "Are you sure delete this ?",
-      icon: <ExclamationCircleOutlined />,
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk() {
-        if (isComment) {
-          console.log(`ownerId ${ownerId}`);
-          console.log(`id ${id}`);
-          deleteComment({ owner_id: ownerId, _id: id });
-          setInterval(() => {
-            setIsDelete(!isDelete);
-          }, [1000]);
-        } else {
-          console.log('delete post')
-          deletePost({ _id: id });
-          setInterval(() => {
-            setIsDelete(!isDelete);
-          }, [1000]);
-        }
-      },
-      onCancel() {
-        console.log("Cancel");
-      },
-    });
+  const showDeleteConfirm = (commentID, ownerID, bool) => {
+    setDeleteValue({ ...deleteValue, owner_id: ownerID, _id: commentID });
+    console.log(deleteValue);
+    setIsDelete(true);
+    setShoudDeleteComment(bool);
+  };
+
+  const handleDelete = async (ownerId, id) => {
+    if (shoudDeleteComment) {
+      console.log(deleteValue);
+      const status = await deleteComment(deleteValue);
+      setIsDelete(!isDelete);
+    } else {
+      console.log("delete post");
+      console.log(`_id ${id}`);
+      const status = await deletePost({ _id: deleteValue.owner_id });
+      setIsDelete(!isDelete);
+    }
   };
 
   useEffect(async () => {
@@ -222,7 +218,7 @@ const Posts = ({ onAddPost }) => {
                   <span
                     key="comment-list-reply-to-0"
                     onClick={() => {
-                      showDeleteConfirm(value._id, false);
+                      showDeleteConfirm(null, value._id, false);
                     }}
                   >
                     <Space>
@@ -255,6 +251,15 @@ const Posts = ({ onAddPost }) => {
           placeholder="edit here"
           onChange={(e) => setEditValue(e.target.value)}
         />
+      </Modal>
+      <Modal
+        title="Delete"
+        visible={isDelete}
+        onOk={handleDelete}
+        // confirmLoading={confirmLoading}
+        onCancel={() => setIsDelete(false)}
+      >
+        <ExclamationCircleOutlined />
       </Modal>
     </Fragment>
   );
