@@ -133,3 +133,27 @@ export const editComment = (comment) => {
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
 };
+
+export const deleteComment = (id) => {
+  axios
+  .post("http://localhost:5000/api/posts/delete-comment", id, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+  })
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
+}
+
+export const deletePost = (id) => {
+  axios
+  .post("http://localhost:5000/api/posts/delete-post", id, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getToken(),
+    },
+  })
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
+}

@@ -6,11 +6,18 @@ import Navbar from "../layout/Navbar";
 import { addPost, getAllPosts } from "../../utils/action";
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
+  const [temp, setTemp] = useState(1)
   const onAddpost = async (request) => {
+    console.log("add post")
     const status = await addPost(request);
+    setTemp(temp+1)
     return status;
   };
+
+  useEffect(() => {
+    console.log(`useEffect Homepage`)
+   
+  },[])
 
   return (
     <Fragment>
@@ -19,7 +26,7 @@ const HomePage = () => {
         <Col span={3}></Col>
         <Col span={18}>
           <PostForm onAddPost={onAddpost} />
-          <Posts  />
+          <Posts onAddPost={onAddpost}/>
         </Col>
         <Col span={3}></Col>
       </Row>

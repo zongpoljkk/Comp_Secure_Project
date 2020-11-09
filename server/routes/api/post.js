@@ -69,4 +69,22 @@ router.post("/edit-comment", (req, res) => {
     .then((comment) => res.json(comment))
     .catch((err) => res.json(err));
 });
+
+router.post("/delete-post", (req, res) => {
+  console.log(req.body);
+  Post.deleteOne({ _id: req.body._id })
+    .then((deleted) => res.json(deleted))
+    .catch((err) => res.json(err));
+});
+
+router.post("/delete-comment", (req, res) => {
+  console.log(req.body);
+  Post.updateOne(
+    { _id: req.body.owner_id },
+    { $pull: { comments: { _id: req.body._id } } }
+  )
+    .then((deleted) => res.json(deleted))
+    .catch((err) => res.json(err));
+});
+
 module.exports = router;
