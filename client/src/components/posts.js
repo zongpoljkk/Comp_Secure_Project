@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useContext,
   useMemo,
+  useCallback,
 } from "react";
 import {
   Tooltip,
@@ -91,16 +92,19 @@ const Posts = ({ onAddPost }) => {
     setVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = useCallback(() => {
     setVisible(false);
     if (shoudEditComment) {
       editComment({ _id: editID, value: editValue });
+      setEditValue("");
     } else {
       editPost({ _id: editID, value: editValue });
+      setEditValue("");
     }
-  };
+  }, [editID, editValue, shoudEditComment]);
 
   const handleCancel = () => {
+    setEditValue("");
     setVisible(false);
     setIsDelete(false);
   };
@@ -136,7 +140,7 @@ const Posts = ({ onAddPost }) => {
       .then(setIsLoading(false))
       // .then(console.log(posts));
   // }, [onAddPost, comments, isDelete]);
-  }, [onAddPost, isDelete, setUser, user]);
+  }, [onAddPost, isDelete, setUser, user, comments, handleOk]);
 
   const renderComment = (comment, ownerId) => {
     let field = [];
@@ -331,7 +335,8 @@ const Posts = ({ onAddPost }) => {
         onCancel={handleCancel}
       >
         <Input
-          value={comments.comment}
+          // value={comments.comment}
+          value={editValue}
           bordered={false}
           placeholder="edit here"
           onChange={(e) => setEditValue(e.target.value)}
