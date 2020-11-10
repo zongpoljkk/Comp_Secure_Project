@@ -49,8 +49,11 @@ const Login = () => {
     setUser({
       ...user,
       name: decoded_jwt.name,
+      email: decoded_jwt.email,
       isModerator: decoded_jwt.isModerator,
     });
+
+    history.push("/homepage");
   };
 
   const onFinishFailed = (errorInfo) => {

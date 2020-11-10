@@ -40,7 +40,7 @@ const UserProvider = (props, value = defaultUser) => {
         isModerator: isModerator,
       });
     }
-  }, [loginUser]);
+  }, [localStorage]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

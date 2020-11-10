@@ -26,6 +26,7 @@ import {
   addPost,
   deleteComment,
   deletePost,
+  loginUser,
 } from "../utils/action";
 import { UserContext } from "../context/UserContext";
 import {
@@ -73,7 +74,7 @@ const Posts = ({ onAddPost }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleChange = (e) => {
-    console.log(comments);
+    // console.log(comments);
     setComments({ id: e.target.id, name: user.name, comment: e.target.value });
   };
 
@@ -132,9 +133,9 @@ const Posts = ({ onAddPost }) => {
     getAllPosts()
       .then((posts) => setPosts(posts))
       .then(setIsLoading(false))
-      .then(console.log(posts));
+      // .then(console.log(posts));
   // }, [onAddPost, comments, isDelete]);
-  }, [onAddPost, comments, isDelete]);
+  }, [onAddPost, isDelete, setUser, user]);
 
   const renderComment = (comment, ownerId) => {
     let field = [];
@@ -161,7 +162,7 @@ const Posts = ({ onAddPost }) => {
             </Tooltip>
           }
           actions={
-            (user.isModerator || user.name == comment[i].name) && [
+            (user.isModerator || user.name === comment[i].name) && [
               <span
                 key="comment-list-reply-to-0"
                 onClick={() =>
