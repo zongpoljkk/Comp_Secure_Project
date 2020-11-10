@@ -75,7 +75,7 @@ const Login = () => {
         <Col span={8}></Col>
         <Col span={8}>
           <Row style={{ justifyContent: "space-around" }}>
-            <Link to="/">Back to Home</Link>
+            <Link id="RouterNavLink" to="/">Back to Home</Link>
           </Row>
         </Col>
       </Row>
