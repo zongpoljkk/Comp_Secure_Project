@@ -136,7 +136,7 @@ const Posts = ({ onAddPost }) => {
       .then(setIsLoading(false))
       // .then(console.log(posts));
   // }, [onAddPost, comments, isDelete]);
-  }, [onAddPost, isDelete, setUser, user]);
+  }, [onAddPost, isDelete, setUser, user, comments, editValue, handleOk]);
 
   const renderComment = (comment, ownerId) => {
     let field = [];
@@ -331,7 +331,7 @@ const Posts = ({ onAddPost }) => {
         onCancel={handleCancel}
       >
         <Input
-          value={comments.comment}
+          // value={comments.comment}
           bordered={false}
           placeholder="edit here"
           onChange={(e) => setEditValue(e.target.value)}

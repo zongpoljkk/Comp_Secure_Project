@@ -74,7 +74,7 @@ router.post("/edit-post", (req, res) => {
 });
 
 router.post("/edit-comment", (req, res) => {
-  // console.log(req.body);
+  console.log(req.body);
   Post.update(
     { "comments._id": req.body._id },
     {
