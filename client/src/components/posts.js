@@ -66,15 +66,16 @@ const Posts = ({ onAddPost }) => {
   });
   const [comments, setComments] = useState({
     id: "",
-    name: user.name,
-    email: user.email,
+    // name: user.name,
+    // email: user.email,
     comment: "",
   });
   const [isLoading, setIsLoading] = useState(true);
 
   const handleChange = (e) => {
     console.log(comments);
-    setComments({ id: e.target.id, name: user.name, comment: e.target.value });
+    setComments({ id: e.target.id , comment: e.target.value });
+    // setComments({ id: e.target.id, name: user.name, comment: e.target.value });
   };
 
   const handleSubmit = async () => {
