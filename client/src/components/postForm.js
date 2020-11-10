@@ -21,10 +21,10 @@ const PostForm = ({ onAddPost }) => {
   const onFinish = async (values) => {
     const { name, email } = decodeToken(localStorage.jwtToken);
     const request = {
-      name: name,
-      email: email,
+      // name: name,
+      // email: email,
       post: values.post.Post,
-      comments: [],
+      // comments: [],
     };
     setIsLoading(true);
     const status = await onAddPost(request);
