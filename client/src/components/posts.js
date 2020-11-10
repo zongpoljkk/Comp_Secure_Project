@@ -194,8 +194,6 @@ const Posts = ({ onAddPost }) => {
 
   return (
     <Fragment>
-      {/* {posts.map((value, index) => { */}
-      {/* return ( */}
       <List
         size="large"
         style={{ width: "100%" }}
@@ -267,61 +265,6 @@ const Posts = ({ onAddPost }) => {
           </List.Item>
         )}
       />
-      {/* // <Comment
-          //   key={value._id}
-          //   id={value._id}
-          //   author={<a>{value.name}</a>}
-          //   avatar={
-          //     <Avatar
-          //       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          //       alt="Han Solo"
-          //     />
-          //   }
-          //   content={<p>{value.post}</p>}
-          //   datetime={
-              // <Tooltip>
-              //   <span>
-              //     {moment(value.date, "YYYY MM DDT hh:mm:ss").format(
-              //       "DD/MM/YYYY hh:mm:ss"
-              //     )}
-              //   </span>
-              // </Tooltip>
-          //   }
-          //   actions={
-          //     (user.isModerator || user.email === value.email) && [
-          //       <span
-          //         key="comment-list-reply-to-0"
-          //         onClick={() => handleEdit(value.post, value._id, false)}
-          //       >
-          //         <Space>
-          //           Edit post <EditOutlined />
-          //         </Space>
-          //       </span>,
-          //       user.isModerator && (
-          //         <span
-          //           key="comment-list-reply-to-0"
-          //           onClick={() => {
-          //             showDeleteConfirm(null, value._id, false);
-          //           }}
-          //         >
-          //           <Space>
-          //             Delete post <DeleteOutlined />
-          //           </Space>
-          //         </span>
-          //       ),
-          //     ]
-          //   }
-          // >
-          //   {renderComment(value.comments, value._id)}
-          //   <Editor
-          //     index={index}
-          //     id={value._id}
-          //     onChange={handleChange}
-          //     onSubmit={handleSubmit}
-          //   />
-          // </Comment>
-        // );
-      // })} */}
       <Modal
         title="Edit"
         visible={visible}
