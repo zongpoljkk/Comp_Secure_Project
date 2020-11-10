@@ -7,6 +7,10 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    // required: false,
+  },
   date: {
     type: Date,
     default: Date.now,

@@ -29,12 +29,14 @@ const UserProvider = (props, value = defaultUser) => {
 
   useEffect(() => {
     if (!!localStorage.getItem("jwtToken")) {
-      const { name, isModerator } = decodeToken(
+      const { name, isModerator, email } = decodeToken(
         localStorage.getItem("jwtToken")
       );
+      console.log(name, isModerator, email)
       setUser({
         ...user,
         name: name,
+        email: email,
         isModerator: isModerator,
       });
     }

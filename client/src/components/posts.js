@@ -65,8 +65,10 @@ const Posts = ({ onAddPost }) => {
   const [comments, setComments] = useState({
     id: "",
     name: user.name,
+    email: user.email,
     comment: "",
   });
+
 
   const handleChange = (e) => {
     console.log(comments);
@@ -120,6 +122,8 @@ const Posts = ({ onAddPost }) => {
   };
 
   useEffect(async () => {
+    console.log(user)
+    // console.log(value)
     console.log(`use Effect posts []`);
     setPosts(await getAllPosts());
   }, [onAddPost, comments, isDelete]);
@@ -205,7 +209,7 @@ const Posts = ({ onAddPost }) => {
               </Tooltip>
             }
             actions={
-              (user.isModerator || user.name == value.name) && [
+              (user.isModerator || user.email === value.email) && [
                 <span
                   key="comment-list-reply-to-0"
                   onClick={() => handleEdit(value.post, value._id, false)}

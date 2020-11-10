@@ -10,6 +10,7 @@ router.post("/newpost", (req, res) => {
   console.log(req.body);
   const newPost = new Post({
     name: req.body.name,
+    email: req.body.email,
     post: req.body.post,
     comments: [],
   });
