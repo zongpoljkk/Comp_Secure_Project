@@ -19,9 +19,10 @@ const PostForm = ({ onAddPost }) => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const onFinish = async (values) => {
-    const { name } = decodeToken(localStorage.jwtToken);
+    const { name, email } = decodeToken(localStorage.jwtToken);
     const request = {
       name: name,
+      email: email,
       post: values.post.Post,
       comments: [],
     };

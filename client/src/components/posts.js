@@ -134,7 +134,7 @@ const Posts = ({ onAddPost }) => {
       .then(setIsLoading(false))
       .then(console.log(posts));
   // }, [onAddPost, comments, isDelete]);
-  }, []);
+  }, [onAddPost, comments, isDelete]);
 
   const renderComment = (comment, ownerId) => {
     let field = [];
