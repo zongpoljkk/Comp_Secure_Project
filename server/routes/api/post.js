@@ -34,7 +34,7 @@ router.get("/allpost", (req, res) => {
 
 router.post("/newcomment", (req, res) => {
   const newComment = { name: req.userInfo.name, email: req.userInfo.email, comment: req.body.comment };
-  console.log(newComment);
+  // console.log(newComment);
   Post.findOneAndUpdate(
     { _id: req.body.id },
     {
