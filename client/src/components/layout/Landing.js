@@ -13,7 +13,7 @@ const Landing = () => {
       <Typography>
         <Row style={{ marginTop: "40px" }}>
           <Col span={8}></Col>
-          <Col span={8}>  <Title style={{textAlignLast : "center"}}>Computer Security</Title></Col>
+          <Col span={8}>  <Title style={{textAlignLast : "center"}}>Thonburian</Title></Col>
         </Row>
         <Row style={{ marginTop: "40px" }}>
           <Col span={8}></Col>

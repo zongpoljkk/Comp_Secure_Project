@@ -14,6 +14,7 @@ import {
   Input,
   Modal,
   Space,
+  List,
 } from "antd";
 import "antd/dist/antd.css";
 import moment from "moment";
@@ -31,6 +32,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
 
 const { TextArea } = Input;
@@ -68,7 +70,7 @@ const Posts = ({ onAddPost }) => {
     email: user.email,
     comment: "",
   });
-
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleChange = (e) => {
     console.log(comments);
@@ -121,16 +123,22 @@ const Posts = ({ onAddPost }) => {
     }
   };
 
-  useEffect(async () => {
-    console.log(user)
+  useEffect(() => {
+    // console.log(user)
     // console.log(value)
     console.log(`use Effect posts []`);
-    setPosts(await getAllPosts());
-  }, [onAddPost, comments, isDelete]);
+    // console.log(user)
+    // setPosts(await getAllPosts());
+    getAllPosts()
+      .then((posts) => setPosts(posts))
+      .then(setIsLoading(false))
+      .then(console.log(posts));
+  // }, [onAddPost, comments, isDelete]);
+  }, []);
 
   const renderComment = (comment, ownerId) => {
     let field = [];
-    for (let i = 0; i != comment.length; i++) {
+    for (let i = 0; i !== comment.length; i++) {
       field.push(
         <Comment
           key={`comment_${i}`}
@@ -186,63 +194,134 @@ const Posts = ({ onAddPost }) => {
 
   return (
     <Fragment>
-      {posts.map((value, index) => {
-        return (
-          <Comment
-            key={value._id}
-            id={value._id}
-            author={<a>{value.name}</a>}
-            avatar={
-              <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                alt="Han Solo"
-              />
-            }
-            content={<p>{value.post}</p>}
-            datetime={
-              <Tooltip>
+      {/* {posts.map((value, index) => { */}
+      {/* return ( */}
+      <List
+        size="large"
+        style={{ width: "100%" }}
+        pagination={{
+          defaultPageSize: 5,
+          hideOnSinglePage: true,
+        }}
+        loading={{
+          spinning: isLoading,
+          indicator: <LoadingOutlined />,
+        }}
+        dataSource={posts}
+        rowKey={(post) => post.id}
+        renderItem={(post) => (
+          <List.Item key={post.id}>
+            <Comment
+              key={post._id}
+              id={post._id}
+              author={post.name}
+              avatar={
+                <Avatar
+                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                  alt="Harry Potter"
+                />
+              }
+              content={post.post}
+              datetime={
+                <Tooltip>
                 <span>
-                  {moment(value.date, "YYYY MM DDT hh:mm:ss").format(
+                  {moment(post.date, "YYYY MM DDT hh:mm:ss").format(
                     "DD/MM/YYYY hh:mm:ss"
                   )}
                 </span>
               </Tooltip>
-            }
-            actions={
-              (user.isModerator || user.email === value.email) && [
-                <span
-                  key="comment-list-reply-to-0"
-                  onClick={() => handleEdit(value.post, value._id, false)}
-                >
-                  <Space>
-                    Edit post <EditOutlined />
-                  </Space>
-                </span>,
-                user.isModerator && (
+              }
+              actions={
+                (user.isModerator || user.email === post.email) && [
                   <span
                     key="comment-list-reply-to-0"
-                    onClick={() => {
-                      showDeleteConfirm(null, value._id, false);
-                    }}
+                    onClick={() => handleEdit(post.post, post._id, false)}
                   >
                     <Space>
-                      Delete post <DeleteOutlined />
+                      Edit post <EditOutlined />
                     </Space>
-                  </span>
-                ),
-              ]
-            }
-          >
-            {renderComment(value.comments, value._id)}
-            <Editor
-              index={index}
-              id={value._id}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-            />
-          </Comment>
-        );
-      })}
+                  </span>,
+                  user.isModerator && (
+                    <span
+                      key="comment-list-reply-to-0"
+                      onClick={() => {
+                        showDeleteConfirm(null, post._id, false);
+                      }}
+                    >
+                      <Space>
+                        Delete post <DeleteOutlined />
+                      </Space>
+                    </span>
+                  ),
+                ]
+              }
+            >
+              {renderComment(post.comments, post._id)}
+              <Editor
+                // index={index}
+                id={post._id}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+              />
+            </Comment>
+          </List.Item>
+        )}
+      />
+      {/* // <Comment
+          //   key={value._id}
+          //   id={value._id}
+          //   author={<a>{value.name}</a>}
+          //   avatar={
+          //     <Avatar
+          //       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          //       alt="Han Solo"
+          //     />
+          //   }
+          //   content={<p>{value.post}</p>}
+          //   datetime={
+              // <Tooltip>
+              //   <span>
+              //     {moment(value.date, "YYYY MM DDT hh:mm:ss").format(
+              //       "DD/MM/YYYY hh:mm:ss"
+              //     )}
+              //   </span>
+              // </Tooltip>
+          //   }
+          //   actions={
+          //     (user.isModerator || user.email === value.email) && [
+          //       <span
+          //         key="comment-list-reply-to-0"
+          //         onClick={() => handleEdit(value.post, value._id, false)}
+          //       >
+          //         <Space>
+          //           Edit post <EditOutlined />
+          //         </Space>
+          //       </span>,
+          //       user.isModerator && (
+          //         <span
+          //           key="comment-list-reply-to-0"
+          //           onClick={() => {
+          //             showDeleteConfirm(null, value._id, false);
+          //           }}
+          //         >
+          //           <Space>
+          //             Delete post <DeleteOutlined />
+          //           </Space>
+          //         </span>
+          //       ),
+          //     ]
+          //   }
+          // >
+          //   {renderComment(value.comments, value._id)}
+          //   <Editor
+          //     index={index}
+          //     id={value._id}
+          //     onChange={handleChange}
+          //     onSubmit={handleSubmit}
+          //   />
+          // </Comment>
+        // );
+      // })} */}
       <Modal
         title="Edit"
         visible={visible}
