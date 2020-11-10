@@ -6,6 +6,7 @@ const cors = require("cors");
 const users = require("./routes/api/users");
 const posts = require("./routes/api/post");
 const app = express();
+const jwt_decode = require("jwt-decode");
 
 // Bodyparser middleware
 app.use(
@@ -31,6 +32,18 @@ app.use(passport.initialize());
 
 // Passport config
 require("./config/passport")(passport);
+
+app.use(async (req) => {
+  try {
+    // const token = req.headers.authorization
+    const userInfo = jwt_decode(req.headers.authorization);
+    console.log(userInfo);
+    req.userInfo = userInfo;
+    return req.next();
+  } catch (e) {
+    return req.next();
+  }
+});
 
 // Routes
 app.use("/api/users", users);

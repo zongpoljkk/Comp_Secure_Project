@@ -4,10 +4,11 @@ const express = require("express");
 const router = express.Router();
 
 const Post = require("../../models/Post");
+const User = require("../../models/User");
 
 router.post("/newpost", (req, res) => {
-  console.log("new Post");
-  console.log(req.body);
+  // console.log("new Post");
+  // console.log(req.body);
   const newPost = new Post({
     name: req.body.name,
     email: req.body.email,
@@ -21,12 +22,12 @@ router.post("/newpost", (req, res) => {
 });
 
 router.get("/allpost", (req, res) => {
-  console.log("Allpost");
+  // console.log("Allpost");
   Post.find()
     .sort({ date: "desc" })
     .then((post) => {
       res.json(post);
-      console.log(post);
+      // console.log(post);
     })
     .catch((err) => console.log(err));
 });
@@ -50,15 +51,30 @@ router.post("/newcomment", (req, res) => {
 });
 
 router.post("/edit-post", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // const editValue = { _id : res.body._id , editValue : req.body.value}
-  Post.findByIdAndUpdate({ _id: req.body._id }, { post: req.body.value })
-    .then((post) => res.json(post))
+  const ownerEmail = req.userInfo.email;
+  console.log(ownerEmail);
+  const filter = { _id: req.body._id, email: req.userInfo.email };
+  // if(ownerEmail == Post.findOneAndUpdate){
+
+  // }
+  Post.findOneAndUpdate(filter, { post: req.body.value })
+    .then((post) => 
+    {
+      if(post == null){
+        res.status(401)
+      }
+      res.json(post)})
     .catch((err) => console.log(err));
+
+  // Post.findByIdAndUpdate({ _id: req.body._id }, { post: req.body.value })
+  //   .then((post) => res.json(post))
+  //   .catch((err) => console.log(err));
 });
 
 router.post("/edit-comment", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   Post.update(
     { "comments._id": req.body._id },
     {
