@@ -19,7 +19,7 @@ const PostForm = ({ onAddPost }) => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const onFinish = async (values) => {
-    
+
     const { name, email } = decodeToken(localStorage.jwtToken);
     const request = {
       // name: name,
@@ -32,12 +32,13 @@ const PostForm = ({ onAddPost }) => {
     if (status === "200") {
       setIsLoading(false);
     }
+    document.getElementById('inputPost').value = '';
   };
 
   return (
     <Form name="nest-messages" onFinish={onFinish}>
       <Form.Item name={["post", "Post"]} label="Post">
-        <Input.TextArea />
+        <Input.TextArea id="inputPost"/>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 1 }}>
         <Button type="primary" htmlType="submit" loading={isLoading}>
