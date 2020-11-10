@@ -79,6 +79,7 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
+          email: user.email,
           isModerator: user.isModerator,
         };
         // Sign token
@@ -86,7 +87,8 @@ router.post("/login", (req, res) => {
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 31556926, // 1 year in seconds
+            // expiresIn: 31556926, // 1 year in seconds
+            expiresIn: 30,
           },
           (err, token) => {
             res.json({
