@@ -76,7 +76,7 @@ const Posts = ({ onAddPost }) => {
 
   const handleChange = (e) => {
     console.log(comments);
-    setComments({ id: e.target.id , comment: e.target.value });
+    setComments({ id: e.target.id, comment: e.target.value });
     // setComments({ id: e.target.id, name: user.name, comment: e.target.value });
   };
 
@@ -130,16 +130,10 @@ const Posts = ({ onAddPost }) => {
   };
 
   useEffect(() => {
-    // console.log(user)
-    // console.log(value)
     console.log(`use Effect posts []`);
-    // console.log(user)
-    // setPosts(await getAllPosts());
     getAllPosts()
       .then((posts) => setPosts(posts))
-      .then(setIsLoading(false))
-      // .then(console.log(posts));
-  // }, [onAddPost, comments, isDelete]);
+      .then(setIsLoading(false));
   }, [onAddPost, isDelete, setUser, user, comments, handleOk]);
 
   const renderComment = (comment, ownerId) => {
@@ -230,12 +224,12 @@ const Posts = ({ onAddPost }) => {
               content={post.post}
               datetime={
                 <Tooltip>
-                <span>
-                  {moment(post.date, "YYYY MM DDT hh:mm:ss").format(
-                    "DD/MM/YYYY hh:mm:ss"
-                  )}
-                </span>
-              </Tooltip>
+                  <span>
+                    {moment(post.date, "YYYY MM DDT hh:mm:ss").format(
+                      "DD/MM/YYYY hh:mm:ss"
+                    )}
+                  </span>
+                </Tooltip>
               }
               actions={
                 (user.isModerator || user.email === post.email) && [
