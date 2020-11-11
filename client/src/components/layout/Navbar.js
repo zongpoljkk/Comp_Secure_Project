@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, Button } from "antd";
 import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
-import { Typography } from "antd";
 import { decodeToken } from "../../utils/action";
 const Navbar = () => {
   const [user, setUser] = useState("");

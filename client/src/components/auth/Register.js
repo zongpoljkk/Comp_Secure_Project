@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Form, Input, Button, Row, Col, Typography } from "antd";
 import { registerUser } from "../../utils/action";
@@ -25,7 +25,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [errors, setErrors] = useState({});
 
   const history = useHistory();
 

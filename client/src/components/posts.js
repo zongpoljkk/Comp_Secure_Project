@@ -3,7 +3,6 @@ import React, {
   Fragment,
   useEffect,
   useContext,
-  useMemo,
   useCallback,
 } from "react";
 import {
@@ -24,10 +23,8 @@ import {
   addComment,
   editPost,
   editComment,
-  addPost,
   deleteComment,
   deletePost,
-  loginUser,
 } from "../utils/action";
 import { UserContext } from "../context/UserContext";
 import {
@@ -38,8 +35,6 @@ import {
 } from "@ant-design/icons";
 
 const { TextArea } = Input;
-const { confirm } = Modal;
-
 const Editor = ({ id, onChange, onSubmit }) => (
   <>
     <Form.Item id={id}>
@@ -81,7 +76,8 @@ const Posts = ({ onAddPost }) => {
   };
 
   const handleSubmit = async () => {
-    const status = await addComment(comments);
+    const _ = await addComment(comments);
+    console.log(_)
     setComments({ ...comments, comment: "" });
   };
 
@@ -119,12 +115,14 @@ const Posts = ({ onAddPost }) => {
   const handleDelete = async (ownerId, id) => {
     if (shoudDeleteComment) {
       console.log(deleteValue);
-      const status = await deleteComment(deleteValue);
+      const _ = await deleteComment(deleteValue);
+      console.log(_)
       setIsDelete(!isDelete);
     } else {
       console.log("delete post");
       console.log(`_id ${id}`);
-      const status = await deletePost({ _id: deleteValue.owner_id });
+      const _ = await deletePost({ _id: deleteValue.owner_id });
+      console.log(_)
       setIsDelete(!isDelete);
     }
   };

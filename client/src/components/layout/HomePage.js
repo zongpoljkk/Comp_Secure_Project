@@ -3,7 +3,7 @@ import { Col, Row } from "antd";
 import PostForm from "../postForm";
 import Posts from "../posts";
 import Navbar from "../layout/Navbar";
-import { addPost, getAllPosts } from "../../utils/action";
+import { addPost } from "../../utils/action";
 
 const HomePage = () => {
   const [temp, setTemp] = useState(1)

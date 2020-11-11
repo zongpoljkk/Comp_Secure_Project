@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { UserProvider } from "./context/UserContext";
-import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.render(
   <UserProvider>
