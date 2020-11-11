@@ -33,7 +33,11 @@ router.get("/allpost", (req, res) => {
 });
 
 router.post("/newcomment", (req, res) => {
-  const newComment = { name: req.userInfo.name, email: req.userInfo.email, comment: req.body.comment };
+  const newComment = {
+    name: req.userInfo.name,
+    email: req.userInfo.email,
+    comment: req.body.comment,
+  };
   // console.log(newComment);
   Post.findOneAndUpdate(
     { _id: req.body.id },
@@ -60,12 +64,17 @@ router.post("/edit-post", (req, res) => {
 
   // }
   Post.findOneAndUpdate(filter, { post: req.body.value })
-    .then((post) => 
-    {
-      if(post == null){
-        res.status(401)
+    .then((post) => {
+      if (post == null) {
+        res.status(403);
+        res.json({
+          message: "You not have permission",
+        });
+      } else {
+        res.status(200);
+        res.json(post);
       }
-      res.json(post)})
+    })
     .catch((err) => console.log(err));
 
   // Post.findByIdAndUpdate({ _id: req.body._id }, { post: req.body.value })
@@ -74,23 +83,49 @@ router.post("/edit-post", (req, res) => {
 });
 
 router.post("/edit-comment", (req, res) => {
-  console.log(req.body);
+  // console.log(req.userInfo);
   Post.update(
-    { "comments._id": req.body._id },
+    { "comments._id": req.body._id, "comments.email": req.userInfo.email },
     {
       $set: {
         "comments.$.comment": req.body.value,
       },
     }
   )
-    .then((comment) => res.json(comment))
+    .then((comment) => {
+      console.log(comment.nModified);
+      if (comment.nModified === 1) {
+        res.status(200);
+        res.json({
+          message: "edit comment success",
+        });
+      } else {
+        res.status(403);
+        res.json({
+          message: "You not have permission",
+        });
+      }
+    })
     .catch((err) => res.json(err));
 });
 
 router.post("/delete-post", (req, res) => {
   console.log(req.body);
-  Post.deleteOne({ _id: req.body._id })
-    .then((deleted) => res.json(deleted))
+  Post.deleteOne({ _id: req.body._id, email: req.userInfo.email })
+    .then((deleted) => {
+      // console.log(deleted)
+      if (deleted.n == 1) {
+        res.status(200);
+        res.json({
+          message: "delete post success",
+        });
+      } else {
+        res.status(403);
+        res.json({
+          message: "You not have permission",
+        });
+      }
+    })
     .catch((err) => res.json(err));
 });
 
@@ -98,9 +133,21 @@ router.post("/delete-comment", (req, res) => {
   console.log(req.body);
   Post.updateOne(
     { _id: req.body.owner_id },
-    { $pull: { comments: { _id: req.body._id } } }
+    { $pull: { comments: { _id: req.body._id, email: req.userInfo.email } } }
   )
-    .then((deleted) => res.json(deleted))
+    .then((deleted) => {
+      if (deleted.nModified == 1) {
+        res.status(200);
+        res.json({
+          "message" : "delete comment success"
+        });
+      } else {
+        res.status(403)
+        res.json({
+          "message" : "You not have permission"
+        })
+      }
+    })
     .catch((err) => res.json(err));
 });
 
