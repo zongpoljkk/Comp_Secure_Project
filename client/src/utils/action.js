@@ -147,7 +147,7 @@ export const deleteComment = (id) => {
       return "200";
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return "400";
     });
   return result;
@@ -162,11 +162,11 @@ export const deletePost = (id) => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return "200";
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return "400";
     });
   return result;

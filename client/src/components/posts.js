@@ -107,7 +107,7 @@ const Posts = ({ onAddPost }) => {
 
   const showDeleteConfirm = (commentID, ownerID, bool) => {
     setDeleteValue({ ...deleteValue, owner_id: ownerID, _id: commentID });
-    console.log(deleteValue);
+    // console.log(deleteValue);
     setIsDelete(true);
     setShoudDeleteComment(bool);
   };
